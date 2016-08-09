@@ -13,6 +13,8 @@ import configureStore from './store/configureStore.js';
 import rootReducer from './reducers';
 import routes from './routes.js';
 import createMemoryHistory from 'history/lib/createMemoryHistory';
+var bodyParser = require('body-parser');
+var fs = require('fs');
 
 var app = new (require('express'))()
 app.set('view engine', 'ejs');
@@ -22,7 +24,11 @@ var port = 3000
 var compiler = webpack(config)
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
 app.use(webpackHotMiddleware(compiler))
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
+// parse application/json
+app.use(bodyParser.json())
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Cache-Control', 'no-cache');
@@ -30,6 +36,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('*', function(req, res) {
+  // res.sendFile(path.join(__dirname, 'index.html'));
   const history = createMemoryHistory({location: req.url})
    let store = configureStore();
    let reduxState = JSON.stringify(store.getState());
@@ -40,7 +47,6 @@ app.get('*', function(req, res) {
      } else if (redirectLocation) {
        res.redirect(302, redirectLocation.pathname + redirectLocation.search)
      } else if (renderProps) {
-       history.push('localhost:3000'+req.url);
        var html = ReactDOMServer.renderToString(
          Provider({store: store}, RouterContext(renderProps))
        )
@@ -49,6 +55,12 @@ app.get('*', function(req, res) {
        res.status(404).send('Not found')
      }
    });
+});
+
+app.post('/generate', function(req, res){
+  fs.appendFile(path.join(__dirname, 'configs', req.body.title), req.body.value, function (err) {
+    console.log('ready to use...');
+  });
 });
 
 app.listen(port, function(error) {

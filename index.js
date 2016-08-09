@@ -9,7 +9,7 @@ import './styles/app.css';
 var preloadedState = window.__REDUX_STATE__;
 preloadedState = JSON.parse(preloadedState);
 
-const store = configureStore(preloadedState);
+const store = configureStore();
 
 render((
     <Provider store={store}>

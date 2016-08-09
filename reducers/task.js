@@ -1,5 +1,6 @@
 const initialState = {
-  stuf: 'new'
+  stuf: 'new',
+  elementsToCreate: []
 };
 
 export default function builtYear(state = initialState, action) {
@@ -8,6 +9,11 @@ export default function builtYear(state = initialState, action) {
         return {
           ...state,
           stuf: action.payload
+        }
+    case 'ADDING_ELEMENT_TO_THE_PAGE':
+        return {
+          ...state,
+          elementsToCreate: action.payload
         }
     default:
       return state;
