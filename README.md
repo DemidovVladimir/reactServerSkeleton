@@ -1,8 +1,17 @@
 # reactServerSkeleton
 reactjs + react-router + redux + nodejs + webpack
-## run npm install
-## run npm start
-## go to localhost:3000/step1
 
-Can be used as a total cms generator and has server side rendering of react instead of strict html rendering...
-Could be usefull for you.
+# Params:
+Use node version 4.*
+
+## Prepare:
+npm install
+
+## Run in development env:
+npm run start-dev
+
+## Run in production env:
+npm run build
+npm run start-prod
+
+### Will not work with other versions of node, strict dependency versions convention to make it non buggy...

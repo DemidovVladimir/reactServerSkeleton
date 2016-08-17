@@ -26,6 +26,7 @@ export default class Step1 extends Component {
         <button onClick={::this.addPage}>Add</button>
         {this.props.task.elementsToCreate.length > 0 ? (
           <div>
+            <h1>Task</h1>
             <h3>Please add input types to page {this.props.task.elementsToCreate[this.props.task.elementsToCreate.length-1]}</h3>
             <form onSubmit={::this.createFile}>
               <input type="checkbox" ref="type" value="text"/>Input text<br/>
